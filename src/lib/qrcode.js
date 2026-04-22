@@ -1,10 +1,189 @@
+import { optimizeSVG, svgToDataURI } from 'etiket'
 import { qrcode } from 'etiket/qr'
+/** Bundled copies of `public/*.svg` — after replacing files in `public/`, copy into `src/assets/` with these names so Vite can bundle them. */
+import upiLogoSvg from '../assets/upi-logo.svg?raw'
+import whatsappQrSvg from '../assets/whatsapp-qr.svg?raw'
+import zoomQrSvg from '../assets/zoom-qr.svg?raw'
+import bitcoinQrSvg from '../assets/bitcoin-qr.svg?raw'
 
-const svgOpts = { margin: 4, ecLevel: 'M', color: '#141414', background: '#ffffff' }
-const pngOpts = { margin: 4, moduleSize: 12, ecLevel: 'M', color: '#141414', background: '#ffffff' }
+function clamp(n, lo, hi) {
+  return Math.min(hi, Math.max(lo, n))
+}
 
-export function toSvg(text) {
-  return qrcode(text, svgOpts)
+function num(v, fallback) {
+  const x = typeof v === 'number' ? v : parseFloat(String(v).replace(',', '.'))
+  return Number.isFinite(x) ? x : fallback
+}
+
+function hexOk(s, fallback) {
+  const t = String(s || '').trim()
+  if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(t)) return t
+  return fallback
+}
+
+/** @param {'fg'|'bg'} which */
+function buildColorPaint(fields, which) {
+  const isBg = which === 'bg'
+  const bgRaw = String(fields.qrBg || '').trim()
+  if (isBg && (bgRaw === 'transparent' || fields.qrBgStyle === 'transparent')) return 'transparent'
+
+  const style = isBg ? String(fields.qrBgStyle || 'solid') : String(fields.qrFgStyle || 'solid')
+  const c1 = hexOk(isBg ? fields.qrBg : fields.qrFg, isBg ? '#ffffff' : '#111827')
+  const c2 = hexOk(isBg ? fields.qrBgColor2 : fields.qrFgColor2, c1)
+  const angle = clamp(num(isBg ? fields.qrBgAngle : fields.qrFgAngle, isBg ? 135 : 45), 0, 360)
+
+  if (style === 'linear') {
+    return {
+      type: 'linear',
+      rotation: angle,
+      stops: [
+        { offset: 0, color: c1 },
+        { offset: 1, color: c2 },
+      ],
+    }
+  }
+  if (style === 'radial') {
+    return {
+      type: 'radial',
+      stops: [
+        { offset: 0, color: c1 },
+        { offset: 1, color: c2 },
+      ],
+    }
+  }
+  return c1
+}
+
+/** Normalize hex for corner colors (gradients not supported in UI here). */
+function colorOrFallback(s, fallback) {
+  return hexOk(s, fallback)
+}
+
+function logoBgPad(background) {
+  return typeof background === 'string' && background !== 'transparent' ? background : '#ffffff'
+}
+
+/** Center `logo.svg` in QR (wide slot by default). */
+function builtInSvgLogo(svg, background, fields, { sizeFallback = 0.28, imageWidth = 2.5, imageHeight = 1 }) {
+  const logoSize = clamp(num(fields.qrLogoSize, sizeFallback), 0.1, 0.45)
+  return {
+    svg,
+    size: logoSize,
+    margin: 8,
+    hideBackgroundDots: true,
+    backgroundColor: logoBgPad(background),
+    imageWidth,
+    imageHeight,
+  }
+}
+
+/**
+ * Maps app `fields` slice to etiket `qrcode()` options (SVG).
+ * @param {Record<string, unknown>} fields
+ */
+export function buildQrSvgOptions(fields) {
+  const size = clamp(Math.round(num(fields.qrSize, 320)), 64, 1024)
+  const margin = clamp(Math.round(num(fields.qrMargin, 4)), 0, 16)
+  const dotSize = clamp(num(fields.qrDotSize, 1), 0.1, 1)
+  const color = buildColorPaint(fields, 'fg')
+  const background = buildColorPaint(fields, 'bg')
+
+  const fgFallback = typeof color === 'string' ? color : '#111827'
+  const outerC = colorOrFallback(fields.qrCornerOuterColor, fgFallback)
+  const innerC = colorOrFallback(fields.qrCornerInnerColor, fgFallback)
+
+  const isUpi = fields.kind === 'upi'
+  const dataUrl = String(fields.qrLogoDataUrl || '').trim()
+  const logoUrl = String(fields.qrLogoUrl || '').trim()
+  const imageUrl = dataUrl || logoUrl || undefined
+  const hasUserLogo = !!imageUrl
+  const useUpiDefault =
+    isUpi &&
+    fields.upiUseDefaultLogo !== false &&
+    fields.upiUseDefaultLogo !== 'false'
+  const hasBuiltInQrLogo =
+    (isUpi && useUpiDefault) ||
+    fields.kind === 'whatsapp' ||
+    fields.kind === 'zoom' ||
+    fields.kind === 'crypto'
+  const hasLogo = hasUserLogo || hasBuiltInQrLogo
+
+  const ecLevel = hasLogo ? 'H' : String(fields.qrEcLevel || 'M').toUpperCase()
+  const dotType = fields.qrDotType || 'square'
+
+  const outerShape = fields.qrCornerOuter || 'square'
+  const innerShape = fields.qrCornerInner || 'square'
+
+  const cornerBlock = {
+    outerShape,
+    innerShape,
+    outerColor: outerC,
+    innerColor: innerC,
+  }
+
+  const opts = {
+    size,
+    margin,
+    ecLevel,
+    shape: 'square',
+    dotType,
+    dotSize,
+    color,
+    background,
+    corners: {
+      topLeft: { ...cornerBlock },
+      topRight: { ...cornerBlock },
+      bottomLeft: { ...cornerBlock },
+    },
+  }
+
+  if (hasUserLogo) {
+    const logoSize = clamp(num(fields.qrLogoSize, isUpi ? 0.32 : 0.28), 0.1, 0.5)
+    opts.logo = {
+      imageUrl,
+      size: logoSize,
+      margin: isUpi ? 8 : 10,
+      hideBackgroundDots: true,
+      backgroundColor:
+        typeof background === 'string' && background !== 'transparent' ? background : '#ffffff',
+    }
+  } else if (isUpi && useUpiDefault) {
+    const logoSize = clamp(num(fields.qrLogoSize, 0.32), 0.1, 0.45)
+    opts.logo = {
+      svg: upiLogoSvg,
+      size: logoSize,
+      margin: 8,
+      hideBackgroundDots: true,
+      backgroundColor: logoBgPad(background),
+      imageWidth: 2.85,
+      imageHeight: 1,
+    }
+  } else if (fields.kind === 'whatsapp') {
+    opts.logo = builtInSvgLogo(whatsappQrSvg, background, fields, {
+      sizeFallback: 0.28,
+      imageWidth: 2.6,
+      imageHeight: 1,
+    })
+  } else if (fields.kind === 'zoom') {
+    opts.logo = builtInSvgLogo(zoomQrSvg, background, fields, {
+      sizeFallback: 0.28,
+      imageWidth: 2.2,
+      imageHeight: 1,
+    })
+  } else if (fields.kind === 'crypto') {
+    opts.logo = builtInSvgLogo(bitcoinQrSvg, background, fields, {
+      sizeFallback: 0.28,
+      imageWidth: 2.4,
+      imageHeight: 1,
+    })
+  }
+
+  return opts
+}
+
+export function toSvg(text, fields) {
+  const opts = buildQrSvgOptions(fields || {})
+  return optimizeSVG(qrcode(text, opts))
 }
 
 export function downloadSvg(svgText, name = 'qr.svg') {
@@ -15,8 +194,43 @@ export function downloadSvg(svgText, name = 'qr.svg') {
   URL.revokeObjectURL(url)
 }
 
+/**
+ * Rasterize styled SVG to PNG (matches preview; no extra deps).
+ * @param {string} svgText
+ * @param {string} [name]
+ * @param {number} [scale] devicePixelRatio multiplier for sharper output
+ */
+export async function downloadPngFromSvg(svgText, name = 'qr.png', scale = 2) {
+  const uri = svgToDataURI(svgText)
+  const img = new Image()
+  img.decoding = 'async'
+  img.crossOrigin = 'anonymous'
+  await new Promise((resolve, reject) => {
+    img.onload = () => resolve()
+    img.onerror = () => reject(new Error('Could not load QR SVG for PNG export.'))
+    img.src = uri
+  })
+  const w = img.naturalWidth || img.width
+  const h = img.naturalHeight || img.height
+  const s = clamp(scale, 1, 4)
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.round(w * s)
+  canvas.height = Math.round(h * s)
+  const ctx = canvas.getContext('2d')
+  if (!ctx) throw new Error('Canvas not available.')
+  if (s !== 1) ctx.scale(s, s)
+  ctx.drawImage(img, 0, 0, w, h)
+  const blob = await new Promise((resolve) => canvas.toBlob((b) => resolve(b || new Blob()), 'image/png'))
+  const url = URL.createObjectURL(blob)
+  const a = Object.assign(document.createElement('a'), { href: url, download: name })
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+/** @deprecated Use downloadPngFromSvg with styled SVG for parity with preview. */
 export async function downloadPng(text, name = 'qr.png') {
   const { qrcodePNG } = await import('etiket/png')
+  const pngOpts = { margin: 4, moduleSize: 12, ecLevel: 'M', color: '#111827', background: '#ffffff' }
   const blob = new Blob([qrcodePNG(text, pngOpts)], { type: 'image/png' })
   const url = URL.createObjectURL(blob)
   const a = Object.assign(document.createElement('a'), { href: url, download: name })

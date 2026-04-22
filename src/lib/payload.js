@@ -1,6 +1,16 @@
+/**
+ * Builds plain QR payload strings for `etiket/qr` `qrcode(text, opts)`.
+ * The `etiket` package also exports `wifi`, `url`, `email`, etc. that return a full SVG string;
+ * those are not used here because this app renders one pipeline: payload text + shared style options.
+ */
 /** Escape WIFI QR field values (semicolons, colons, backslashes, quotes). */
 function escapeWifi(s) {
   return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/:/g, '\\:').replace(/"/g, '\\"')
+}
+
+/** MeCard field escaping (semicolons and colons break the record). */
+function escapeMecard(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/:/g, '\\:')
 }
 
 /** vCard 3.0 text escaping for structured values. */
@@ -115,6 +125,24 @@ export function buildPayload(fields) {
     return { text, ok: true }
   }
 
+  if (k === 'mecard') {
+    const name = String(fields.meCardName || '').trim()
+    const tel = String(fields.meCardPhone || '').trim()
+    const em = String(fields.meCardEmail || '').trim()
+    const url = String(fields.meCardUrl || '').trim()
+    if (!name) return { text: '', ok: false, msg: 'Enter a display name for MeCard.' }
+    if (!tel && !em && !url) {
+      return { text: '', ok: false, msg: 'Add at least a phone, email, or URL for MeCard.' }
+    }
+    let t = 'MECARD:'
+    t += `N:${escapeMecard(name)};`
+    if (tel) t += `TEL:${escapeMecard(tel)};`
+    if (em) t += `EMAIL:${escapeMecard(em)};`
+    if (url) t += `URL:${escapeMecard(url)};`
+    t += ';'
+    return { text: t, ok: true }
+  }
+
   if (k === 'contact') {
     const name = String(fields.cardName || '').trim()
     const tel = String(fields.cardPhone || '').trim()
@@ -144,6 +172,58 @@ export function buildPayload(fields) {
     const lo = parseFloat(fields.lng)
     const lb = String(fields.geoLabel || '').trim()
     const text = lb ? `geo:${la},${lo}?q=${encodeURIComponent(lb)}` : `geo:${la},${lo}`
+    return { text, ok: true }
+  }
+
+  if (k === 'whatsapp') {
+    const raw = String(fields.waPhone || '').trim()
+    const d = digitsOnly(raw)
+    if (!raw) return { text: '', ok: false, msg: 'Enter a WhatsApp number (with country code).' }
+    if (d.length < 10) return { text: '', ok: false, msg: 'Use full number with country code (no + in field ok).' }
+    const msg = String(fields.waMessage || '').trim()
+    const path = `https://wa.me/${d}`
+    const text = msg ? `${path}?text=${encodeURIComponent(msg)}` : path
+    return { text, ok: true }
+  }
+
+  if (k === 'upi') {
+    const pa = String(fields.upiVpa || '').trim()
+    const pn = String(fields.upiName || '').trim()
+    const amRaw = String(fields.upiAmount || '').trim()
+    if (!pa) return { text: '', ok: false, msg: 'Enter UPI ID (VPA), e.g. name@paytm.' }
+    if (!/^[\w.\-]{1,128}@[\w.\-]{1,64}$/i.test(pa)) {
+      return { text: '', ok: false, msg: 'UPI ID should look like username@bankhandle.' }
+    }
+    if (!pn) return { text: '', ok: false, msg: 'Enter payee name as it should appear in the app.' }
+    if (amRaw && !/^\d+(\.\d{1,2})?$/.test(amRaw)) {
+      return { text: '', ok: false, msg: 'Amount must be a number with up to 2 decimals (e.g. 100 or 50.25), or leave empty.' }
+    }
+    const q = new URLSearchParams()
+    q.set('pa', pa)
+    q.set('pn', pn)
+    q.set('cu', 'INR')
+    if (amRaw) q.set('am', amRaw)
+    return { text: `upi://pay?${q.toString()}`, ok: true }
+  }
+
+  if (k === 'crypto') {
+    const addr = String(fields.cryptoAddress || '').trim()
+    if (!addr) return { text: '', ok: false, msg: 'Enter a Bitcoin address.' }
+    const amount = String(fields.cryptoAmount || '').trim()
+    const label = String(fields.cryptoLabel || '').trim()
+    const q = new URLSearchParams()
+    if (amount) q.set('amount', amount)
+    if (label) q.set('label', label)
+    const qs = q.toString()
+    return { text: qs ? `bitcoin:${addr}?${qs}` : `bitcoin:${addr}`, ok: true }
+  }
+
+  if (k === 'zoom') {
+    const id = digitsOnly(String(fields.zoomId || ''))
+    if (!id || id.length < 9) return { text: '', ok: false, msg: 'Enter a Zoom meeting ID (9–11 digits).' }
+    const pwd = String(fields.zoomPwd || '').trim()
+    const base = `https://zoom.us/j/${id}`
+    const text = pwd ? `${base}?pwd=${encodeURIComponent(pwd)}` : base
     return { text, ok: true }
   }
 
