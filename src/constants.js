@@ -1,0 +1,46 @@
+export const options = [
+  ['link', 'Link'],
+  ['text', 'Text'],
+  ['wifi', 'WiFi'],
+  ['phone', 'Phone'],
+  ['email', 'Email'],
+  ['sms', 'SMS'],
+  ['contact', 'Contact'],
+  ['location', 'Location'],
+  ['event', 'Event'],
+]
+
+export const wifiEncOptions = [
+  ['WPA', 'WPA'],
+  ['WPA2', 'WPA2'],
+  ['WEP', 'WEP'],
+  ['nopass', 'None'],
+]
+
+export const initialFields = {
+  kind: 'link',
+  url: '',
+  text: '',
+  wifiSsid: '',
+  wifiPass: '',
+  wifiEnc: 'WPA',
+  wifiHidden: false,
+  phone: '',
+  mailTo: '',
+  mailSubject: '',
+  mailBody: '',
+  smsTo: '',
+  smsBody: '',
+  cardName: '',
+  cardPhone: '',
+  cardEmail: '',
+  cardOrg: '',
+  lat: '',
+  lng: '',
+  geoLabel: '',
+  eventTitle: '',
+  eventStart: '',
+  eventEnd: '',
+  eventPlace: '',
+  eventNote: '',
+}
