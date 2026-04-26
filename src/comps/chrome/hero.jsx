@@ -7,7 +7,7 @@ export function Hero() {
             Encode Anything as QR
           </h1>
           <p className="mt-2 max-w-xl text-[0.95rem] leading-relaxed text-qn-body md:mx-auto md:text-[1.05rem]">
-            QR encoding runs in your browser. Download or copy when the code is ready.
+            Runs entirely in Browser. No data leaves your device.
           </p>
         </div>
       </div>
