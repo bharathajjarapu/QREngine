@@ -1,10 +1,10 @@
-import { Content } from './content'
-import { Colors } from './colors'
-import { Export } from './export'
-import { Logo } from './logo'
+import { Content } from '../studio/content'
+import { Colors } from '../studio/colors'
+import { Export } from '../studio/export'
+import { Logo } from '../studio/logo'
 import { Panel } from './panel'
-import { Preview } from './preview'
-import { Shape } from './shape'
+import { Preview } from '../studio/preview'
+import { Shape } from '../studio/shape'
 
 export function Studio({
   fields,

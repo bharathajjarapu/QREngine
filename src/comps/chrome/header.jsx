@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { IconGithub, IconMoon, IconSun } from '../../config/icons'
+import { IconGithub, IconMoon, IconSun } from '../../utils/icons'
 import { getResolvedTheme, THEME_STORAGE_KEY, toggleTheme } from '../../utils/theme'
 
 export function Header() {

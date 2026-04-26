@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
-import { options, wifiEncOptions } from '../../config/constants'
+import { options, wifiEncOptions } from '../../utils/constants'
 
-const Map = lazy(() => import('../map.jsx'))
+const Map = lazy(() => import('../layout/map.jsx'))
 
 export function Content({ fields, setField, mapZoom, setMapZoom, qrCapMsg }) {
   return (

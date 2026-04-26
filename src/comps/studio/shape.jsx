@@ -1,5 +1,5 @@
-import { qrCornerInnerOptions, qrCornerOuterOptions, qrDotTypeOptions, qrEcOptions } from '../../config/constants'
-import { QrCornerStrip, QrDotTypeStrip } from './tiles'
+import { qrCornerInnerOptions, qrCornerOuterOptions, qrDotTypeOptions, qrEcOptions } from '../../utils/constants'
+import { QrCornerStrip, QrDotTypeStrip } from '../layout/tiles'
 
 export function Shape({ fields, setField, qrExportPx, hasLogo, ecDisplay }) {
   return (

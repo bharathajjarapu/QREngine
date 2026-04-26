@@ -1,4 +1,3 @@
-
 export function Colors({ fields, setField, setFields }) {
   const bgMode = fields.qrBg === 'transparent' ? 'transparent' : fields.qrBgStyle
   const setBg = (next) => {

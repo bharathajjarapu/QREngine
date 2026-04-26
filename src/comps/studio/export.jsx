@@ -1,5 +1,5 @@
 import { copyText, downloadPngFromSvg, downloadSvg } from '../../utils/qrcode'
-import { IconCode, IconCopy, IconDownload, IconVectorSquare } from '../../config/icons'
+import { IconCode, IconCopy, IconDownload, IconVectorSquare } from '../../utils/icons'
 
 function Tool({ label, disabled, onClick, children }) {
   return (

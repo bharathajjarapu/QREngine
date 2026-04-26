@@ -1,4 +1,3 @@
-/** Collapsible panel (exclusive accordions controlled by parent). */
 export function Panel({ title, isOpen, onToggle, children }) {
   return (
     <div className="overflow-hidden rounded-md border-2 border-qn-line/75 bg-qn-panel">

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { MAP_DEFAULT, latToTileY, lonToTileX, searchPlaces, tileToLat, tileToLon, validLatLng } from '../utils/geo'
+import { MAP_DEFAULT, latToTileY, lonToTileX, searchPlaces, tileToLat, tileToLon, validLatLng } from '../../utils/geo'
 
-/** Lazy-loaded map + place search (OpenStreetMap tiles). */
 export default function Map({ latStr, lngStr, onPick, zoom, onZoomChange }) {
   const [q, setQ] = useState('')
   const [hits, setHits] = useState([])

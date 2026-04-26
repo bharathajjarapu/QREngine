@@ -1,5 +1,3 @@
-/** Small visual tiles for QR module / finder styles (replaces dropdowns). */
-
 const VB = 28
 const G = 0.35
 const STEP = (VB - G * 4) / 5 + G
@@ -67,7 +65,6 @@ function DotTypeSvg({ type }) {
   )
 }
 
-/** Finder-ish frame: outer ring uses `outer`, center 3×3 uses `inner` (for combined preview we only need one role). */
 function CornerSvg({ role, variant }) {
   const o = variant
   const pad = 2
@@ -106,7 +103,7 @@ function CornerSvg({ role, variant }) {
       )
   }
 
-  /* inner */
+  /* Inner but I can change it later anyway */
   if (o === 'square') return <DotTypeSvg type="square" />
   if (o === 'dots') return <DotTypeSvg type="dots" />
   return <DotTypeSvg type="rounded" />

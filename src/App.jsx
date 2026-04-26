@@ -3,9 +3,8 @@ import { validateQRInput } from 'etiket'
 import { Footer } from './comps/chrome/footer'
 import { Header } from './comps/chrome/header'
 import { Hero } from './comps/chrome/hero'
-import { Page } from './comps/chrome/layout'
-import { Studio } from './comps/studio/studio'
-import { initialFields } from './config/constants'
+import { Studio } from './comps/layout/studio'
+import { initialFields } from './utils/constants'
 import { useDebounced } from './hooks/debounce'
 import { buildPayload } from './utils/payload'
 import { presetSvgById } from './utils/logos'
@@ -60,7 +59,7 @@ export default function App() {
   }, [ready])
 
   return (
-    <Page>
+    <main className="page-grain flex min-h-[100dvh] w-full max-w-full flex-col overflow-x-hidden font-sans text-qn-ink">
       <Header />
       <div className="flex min-h-0 w-full flex-1 flex-col">
         <Hero />
@@ -92,6 +91,6 @@ export default function App() {
         />
         <Footer />
       </div>
-    </Page>
+    </main>
   )
 }
