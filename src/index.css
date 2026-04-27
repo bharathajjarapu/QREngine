@@ -41,14 +41,14 @@
     }
   }
   .qn-grid-kind {
-    @apply grid grid-cols-3 gap-1.5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 sm:gap-2 lg:gap-2;
+    @apply grid grid-cols-3 gap-1.5 sm:grid-cols-4 min-[1080px]:grid-cols-5 min-[1280px]:grid-cols-6 xl:grid-cols-7 sm:gap-2 min-[1280px]:gap-2;
   }
   .qn-opt {
-    @apply flex flex-col items-center justify-center gap-1 rounded-md px-2 py-2 text-center transition focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-qn-ink/35 active:scale-[0.98] min-h-[3rem] sm:min-h-[3.1rem] lg:min-h-0 lg:px-2.5 lg:py-2.5;
+    @apply flex min-h-10 flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-center transition focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-qn-ink/35 active:scale-[0.98] lg:px-2.5 lg:py-2;
   }
   /* Compact text pills (e.g. error correction): content width, row flex for stable vertical centering */
   .qn-opt-ec {
-    @apply inline-flex w-fit min-w-0 shrink-0 flex-row items-center justify-center gap-0 px-3 py-2 min-h-10 sm:min-h-11 sm:px-3.5 sm:py-2.5;
+    @apply inline-flex min-h-10 w-fit min-w-0 shrink-0 flex-row items-center justify-center gap-0 px-2.5 py-1.5 sm:px-3 sm:py-1.5;
   }
   .qn-opt--on {
     @apply border-2 shadow-none;
@@ -79,7 +79,7 @@
     @apply size-9 shrink-0 cursor-pointer rounded-md border-2 border-qn-muted/30 bg-qn-panel p-0.5 shadow-none sm:size-10;
   }
   .qn-frame {
-    @apply rounded-md border-2 border-qn-line/75 bg-white px-2.5 py-2.5 shadow-none md:px-3 md:py-3;
+    @apply rounded-md border-2 border-qn-line/75 bg-white px-2.5 py-2.5 shadow-none min-[1080px]:px-3 min-[1080px]:py-3;
   }
   .qn-input {
     @apply min-w-0 w-full rounded-md border-2 border-qn-muted/30 bg-qn-panel px-3 py-2 text-[0.9375rem] font-normal leading-snug text-qn-ink shadow-none placeholder:text-qn-faint outline-none ring-0 transition focus:border-qn-ink/45 focus:shadow-none focus:ring-0 sm:text-[0.9375rem];
@@ -89,6 +89,12 @@
   }
   .qn-accordion-title {
     @apply text-xs font-semibold uppercase tracking-[0.06em] text-qn-ink sm:text-sm;
+  }
+  @media (min-width: 1080px) and (max-height: 760px) {
+    .qn-studio-pane,
+    .qn-studio-aside {
+      @apply p-4;
+    }
   }
 }
 

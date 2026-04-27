@@ -35,14 +35,14 @@ export function Studio({
   const busy = !!(payload.ok && previewIn && previewIn !== debouncedPreview)
 
   return (
-    <div className="qn-layout flex min-h-0 flex-1 flex-col px-4 pb-2 md:px-8 md:pb-3">
+    <div className="qn-layout flex min-h-0 flex-1 flex-col px-4 pb-2 min-[1080px]:px-8 min-[1080px]:pb-3">
       <section
-        className="w-full shrink-0 max-md:contents md:flex md:min-h-0 md:flex-col md:qn-studio md:overflow-hidden md:h-[min(72dvh,40rem)] md:max-h-[min(72dvh,40rem)] lg:h-[min(78dvh,46rem)] lg:max-h-[min(78dvh,46rem)]"
+        className="w-full shrink-0 max-[1079px]:contents min-[1080px]:flex min-[1080px]:min-h-0 min-[1080px]:flex-col min-[1080px]:qn-studio min-[1080px]:overflow-hidden min-[1080px]:h-[clamp(22rem,calc(100dvh-10.25rem),40rem)] min-[1080px]:max-h-[clamp(22rem,calc(100dvh-10.25rem),40rem)] min-[1280px]:h-[clamp(24rem,calc(100dvh-9.5rem),46rem)] min-[1280px]:max-h-[clamp(24rem,calc(100dvh-9.5rem),46rem)]"
         aria-label="Studio"
       >
-        <div className="flex min-h-0 w-full flex-1 flex-col gap-6 max-md:w-full max-md:gap-8 max-md:rounded-none max-md:border-0 max-md:bg-transparent overflow-visible rounded-xl border-2 border-solid border-qn-line/70 md:grid md:min-h-0 md:flex-1 md:grid-cols-[minmax(0,1.22fr)_minmax(0,0.88fr)] md:grid-rows-1 md:items-stretch md:gap-0 md:overflow-hidden md:bg-qn-surface">
-          <div className="max-md:contents md:flex md:h-full md:min-h-0 md:min-w-0 md:flex-col md:bg-qn-surface">
-            <div className="flex w-full min-w-0 flex-col gap-2 max-md:gap-3 max-md:overflow-visible max-md:p-0 md:min-h-0 md:flex-1 md:gap-2.5 md:overflow-y-auto md:p-6 [scrollbar-gutter:stable]">
+        <div className="flex min-h-0 w-full flex-1 flex-col gap-6 max-[1079px]:w-full max-[1079px]:gap-8 max-[1079px]:rounded-none max-[1079px]:border-0 max-[1079px]:bg-transparent overflow-visible rounded-xl border-2 border-solid border-qn-line/70 min-[1080px]:grid min-[1080px]:min-h-0 min-[1080px]:flex-1 min-[1080px]:grid-cols-[minmax(0,1.22fr)_minmax(0,0.88fr)] min-[1080px]:grid-rows-1 min-[1080px]:items-stretch min-[1080px]:gap-0 min-[1080px]:overflow-hidden min-[1080px]:bg-qn-surface">
+          <div className="max-[1079px]:contents min-[1080px]:flex min-[1080px]:h-full min-[1080px]:min-h-0 min-[1080px]:min-w-0 min-[1080px]:flex-col min-[1080px]:bg-qn-surface">
+            <div className="qn-studio-pane flex w-full min-w-0 flex-col gap-2 max-[1079px]:gap-3 max-[1079px]:overflow-visible max-[1079px]:p-0 min-[1080px]:min-h-0 min-[1080px]:flex-1 min-[1080px]:gap-2.5 min-[1080px]:overflow-y-auto min-[1080px]:p-6 [scrollbar-gutter:stable]">
               <Panel title="QR" isOpen={open === 'content'} onToggle={() => toggle('content')}>
                 <Content
                   fields={fields}
@@ -81,7 +81,7 @@ export function Studio({
           </div>
 
           <aside
-            className="relative flex min-h-0 min-w-0 flex-col gap-4 max-md:gap-5 max-md:overflow-visible max-md:bg-transparent [scrollbar-gutter:stable] md:h-full md:gap-2 md:overflow-y-auto md:bg-qn-surface md:p-6 before:pointer-events-none before:content-[''] max-md:before:hidden md:before:absolute md:before:inset-y-0 md:before:left-0 md:before:w-[2px] md:before:bg-qn-line/70"
+            className="qn-studio-aside relative flex min-h-0 min-w-0 flex-col gap-4 max-[1079px]:gap-5 max-[1079px]:overflow-visible max-[1079px]:bg-transparent [scrollbar-gutter:stable] min-[1080px]:h-full min-[1080px]:gap-2 min-[1080px]:overflow-y-auto min-[1080px]:bg-qn-surface min-[1080px]:p-6 before:pointer-events-none before:content-[''] max-[1079px]:before:hidden min-[1080px]:before:absolute min-[1080px]:before:inset-y-0 min-[1080px]:before:left-0 min-[1080px]:before:w-[2px] min-[1080px]:before:bg-qn-line/70"
             aria-label="QR matrix and export"
           >
             <Preview qrSvg={qrSvg} qrErr={qrErr} qrIntro={qrIntro} busy={busy} errMsg={errMsg} />

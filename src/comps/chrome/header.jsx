@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { IconGithub, IconMoon, IconSun } from '../../utils/icons'
+import { IconGithub, IconMoon, IconSun } from './icons'
 import { getResolvedTheme, THEME_STORAGE_KEY, toggleTheme } from '../../utils/theme'
 
 export function Header() {
@@ -21,7 +21,7 @@ export function Header() {
   const icon = theme === 'dark' ? <IconMoon /> : <IconSun />
 
   return (
-    <header className="w-full shrink-0 px-3 pt-3 pb-3 sm:px-4 md:px-5 md:pt-4 md:pb-3 lg:px-6">
+    <header className="w-full shrink-0 px-3 pt-3 pb-3 sm:px-4 min-[1080px]:px-8 min-[1080px]:pt-3 min-[1080px]:pb-2 lg:px-8">
       <div className="flex w-full min-w-0 items-center justify-between gap-4">
         <div className="flex min-w-0 items-center justify-start gap-3">
           <span
@@ -35,7 +35,7 @@ export function Header() {
               />
             ))}
           </span>
-          <span className="brand-wordmark min-w-0 truncate text-[1.65rem] leading-none font-semibold tracking-[-0.05em] text-qn-ink sm:text-[1.8rem] md:text-[2rem]">
+          <span className="brand-wordmark min-w-0 truncate text-[1.65rem] leading-none font-semibold tracking-[-0.05em] text-qn-ink sm:text-[1.8rem] min-[1080px]:text-[1.95rem] lg:text-[2rem]">
             QREngine
           </span>
         </div>

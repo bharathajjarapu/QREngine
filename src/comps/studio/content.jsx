@@ -176,7 +176,7 @@ export function Content({ fields, setField, mapZoom, setMapZoom, qrCapMsg }) {
         )}
 
         {fields.kind === 'location' && (
-          <div className="grid gap-3 md:grid-cols-2 md:items-start">
+          <div className="grid gap-3 min-[1080px]:grid-cols-2 min-[1080px]:items-start">
             <div className="min-w-0">
               <Suspense fallback={<p className="text-sm text-qn-muted">Loading map…</p>}>
                 <Map

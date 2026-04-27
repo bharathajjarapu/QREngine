@@ -1,31 +1,31 @@
 import { copyText, downloadPngFromSvg, downloadSvg } from '../../utils/qrcode'
-import { IconCode, IconCopy, IconDownload, IconVectorSquare } from '../../utils/icons'
+import { IconCode, IconCopy, IconDownload, IconVectorSquare } from '../chrome/icons'
 
 function Tool({ label, disabled, onClick, children }) {
   return (
-    <div className="group relative w-full md:inline-flex md:w-auto">
+    <div className="group relative w-full min-[1080px]:inline-flex min-[1080px]:w-auto">
       <button
         type="button"
-        className="peer inline-flex max-w-full max-md:w-full min-w-0 items-center justify-center gap-2 rounded-md border-0 text-center transition [-webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-qn-ink/35 disabled:pointer-events-none disabled:opacity-40 qn-iconbtn-lg max-md:min-h-12 max-md:max-h-12 max-md:px-4 max-md:py-3 max-md:text-sm max-md:font-semibold max-md:text-qn-ink max-md:active:scale-[0.99] max-md:active:bg-[var(--color-qn-control-on-bg)] max-md:active:text-[var(--color-qn-control-on-fg)] max-md:active:shadow-[inset_0_1px_0_var(--color-qn-control-on-shine)] md:gap-0 md:p-0 md:active:scale-[0.98]"
+        className="peer inline-flex max-w-full max-[1079px]:w-full min-w-0 items-center justify-center gap-2 rounded-md border-0 text-center transition [-webkit-tap-highlight-color:transparent] focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-qn-ink/35 disabled:pointer-events-none disabled:opacity-40 qn-iconbtn-lg max-[1079px]:min-h-12 max-[1079px]:max-h-12 max-[1079px]:px-4 max-[1079px]:py-3 max-[1079px]:text-sm max-[1079px]:font-semibold max-[1079px]:text-qn-ink max-[1079px]:active:scale-[0.99] max-[1079px]:active:bg-[var(--color-qn-control-on-bg)] max-[1079px]:active:text-[var(--color-qn-control-on-fg)] max-[1079px]:active:shadow-[inset_0_1px_0_var(--color-qn-control-on-shine)] min-[1080px]:gap-0 min-[1080px]:p-0 min-[1080px]:active:scale-[0.98]"
         aria-label={label}
         title={label}
         disabled={disabled}
         onClick={onClick}
       >
-        <span className="md:hidden">{label}</span>
-        <span className="hidden shrink-0 md:inline-flex" aria-hidden="true">
+        <span className="min-[1080px]:hidden">{label}</span>
+        <span className="hidden shrink-0 min-[1080px]:inline-flex" aria-hidden="true">
           {children}
         </span>
       </button>
-      <span className="qn-tip max-md:hidden">{label}</span>
+      <span className="qn-tip max-[1079px]:hidden">{label}</span>
     </div>
   )
 }
 
 export function Export({ ready, getFull, payloadText }) {
   return (
-    <div className="flex w-full min-w-0 flex-col items-center max-md:items-stretch">
-      <div className="flex w-full max-w-full flex-col gap-2 pt-0.5 max-md:items-stretch md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-2.5">
+    <div className="flex w-full min-w-0 flex-col items-center max-[1079px]:items-stretch">
+      <div className="flex w-full max-w-full flex-col gap-2 pt-0.5 max-[1079px]:items-stretch min-[1080px]:flex-row min-[1080px]:flex-wrap min-[1080px]:items-center min-[1080px]:justify-center min-[1080px]:gap-2.5">
         <Tool
           label="Download PNG"
           disabled={!ready}

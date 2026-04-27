@@ -59,7 +59,7 @@ function DotTypeSvg({ type }) {
     }
   }
   return (
-    <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+    <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
       {els}
     </svg>
   )
@@ -73,31 +73,31 @@ function CornerSvg({ role, variant }) {
   if (role === 'outer') {
     if (o === 'square')
       return (
-        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
           <rect x={pad} y={pad} width={outer} height={outer} fill="none" stroke="currentColor" strokeWidth={outer * 0.22} />
         </svg>
       )
     if (o === 'rounded')
       return (
-        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
           <rect x={pad} y={pad} width={outer} height={outer} rx={outer * 0.22} fill="none" stroke="currentColor" strokeWidth={outer * 0.2} />
         </svg>
       )
     if (o === 'dots')
       return (
-        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
           <circle cx={VB / 2} cy={VB / 2} r={outer * 0.38} fill="none" stroke="currentColor" strokeWidth={outer * 0.14} strokeDasharray={`${outer * 0.12} ${outer * 0.1}`} />
         </svg>
       )
     if (o === 'extra-rounded')
       return (
-        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
           <rect x={pad} y={pad} width={outer} height={outer} rx={outer * 0.38} fill="none" stroke="currentColor" strokeWidth={outer * 0.2} />
         </svg>
       )
     if (o === 'classy')
       return (
-        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-8 shrink-0" aria-hidden>
+        <svg viewBox={`0 0 ${VB} ${VB}`} className="size-7 shrink-0" aria-hidden>
           <rect x={pad} y={pad} width={outer} height={outer} rx={outer * 0.12} fill="none" stroke="currentColor" strokeWidth={outer * 0.22} />
         </svg>
       )

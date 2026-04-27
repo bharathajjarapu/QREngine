@@ -4,23 +4,23 @@ import { QrCornerStrip, QrDotTypeStrip } from '../layout/tiles'
 export function Shape({ fields, setField, qrExportPx, hasLogo, ecDisplay }) {
   return (
     <div className="space-y-3">
-      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end">
-        <div className="min-w-0 max-md:w-full md:w-auto md:shrink md:grow-[3] md:basis-0">
+      <div className="flex flex-col gap-3 min-[1401px]:flex-row min-[1401px]:flex-wrap min-[1401px]:items-end">
+        <div className="min-w-0 w-full min-[1401px]:w-auto min-[1401px]:shrink min-[1401px]:grow-[3] min-[1401px]:basis-0">
           <span className="qn-heading">Dot type</span>
           <QrDotTypeStrip value={fields.qrDotType} onChange={(v) => setField('qrDotType', v)} options={qrDotTypeOptions} />
         </div>
-        <div className="min-w-0 max-md:w-full md:w-auto md:shrink md:grow md:basis-0">
+        <div className="min-w-0 w-full min-[1401px]:w-auto min-[1401px]:shrink min-[1401px]:grow min-[1401px]:basis-0">
           <span className="qn-heading">Outer corner</span>
           <QrCornerStrip role="outer" value={fields.qrCornerOuter} onChange={(v) => setField('qrCornerOuter', v)} options={qrCornerOuterOptions} />
         </div>
-        <div className="min-w-0 max-md:w-full md:w-auto md:shrink md:grow md:basis-0">
+        <div className="min-w-0 w-full min-[1401px]:w-auto min-[1401px]:shrink min-[1401px]:grow min-[1401px]:basis-0">
           <span className="qn-heading">Inner corner</span>
           <QrCornerStrip role="inner" value={fields.qrCornerInner} onChange={(v) => setField('qrCornerInner', v)} options={qrCornerInnerOptions} />
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end">
-        <div className="min-w-0 max-md:w-full md:flex-1 md:basis-0">
+      <div className="flex flex-col gap-3 min-[1080px]:flex-row min-[1080px]:flex-wrap min-[1080px]:items-end">
+        <div className="min-w-0 max-[1079px]:w-full min-[1080px]:flex-1 min-[1080px]:basis-0">
           <span className="qn-heading">Error correction</span>
           <div className="mt-1 flex flex-wrap gap-1.5 sm:gap-2" role="group" aria-label="Error correction level">
             {qrEcOptions.map(([value, label]) => {
@@ -42,8 +42,8 @@ export function Shape({ fields, setField, qrExportPx, hasLogo, ecDisplay }) {
             })}
           </div>
         </div>
-        <div className="grid max-md:w-full shrink-0 grid-cols-2 gap-3 md:flex md:w-auto">
-          <label className="grid min-w-0 gap-1 md:w-[6.75rem] md:shrink-0">
+        <div className="grid max-[1079px]:w-full shrink-0 grid-cols-2 gap-3 min-[1080px]:flex min-[1080px]:w-auto">
+          <label className="grid min-w-0 gap-1 min-[1080px]:w-[6.75rem] min-[1080px]:shrink-0">
             <span className="qn-heading">Dot size</span>
             <input
               className={`qn-input font-mono text-sm`}
@@ -55,7 +55,7 @@ export function Shape({ fields, setField, qrExportPx, hasLogo, ecDisplay }) {
               onChange={(e) => setField('qrDotSize', e.target.value)}
             />
           </label>
-          <label className="grid min-w-0 gap-1 md:w-[6.75rem] md:shrink-0">
+          <label className="grid min-w-0 gap-1 min-[1080px]:w-[6.75rem] min-[1080px]:shrink-0">
             <span className="qn-heading">Export size</span>
             <input
               className={`qn-input font-mono text-sm`}

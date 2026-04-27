@@ -121,7 +121,7 @@ export default function Map({ latStr, lngStr, onPick, zoom, onZoomChange }) {
 
       <div className="relative overflow-hidden rounded-md bg-qn-panel shadow-[inset_0_0_0_1px_rgba(229,231,235,0.85),0_12px_34px_-24px_rgba(17,24,39,0.16)]">
         <div
-          className="relative h-[min(32vh,12.5rem)] w-full cursor-crosshair touch-manipulation outline-none [-webkit-tap-highlight-color:transparent] sm:h-[min(34vh,13.5rem)] md:h-[min(36vh,14rem)]"
+          className="relative h-[min(32vh,12.5rem)] w-full cursor-crosshair touch-manipulation outline-none [-webkit-tap-highlight-color:transparent] sm:h-[min(34vh,13.5rem)] min-[1080px]:h-[min(36vh,14rem)]"
           onPointerDown={(e) => {
             if (e.button !== 0) return
             onPointer(e)

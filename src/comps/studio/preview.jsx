@@ -1,6 +1,6 @@
 export function Preview({ qrSvg, qrErr, qrIntro, busy, errMsg }) {
   return (
-    <div className="flex w-full min-w-0 shrink-0 flex-col gap-1.5 md:gap-2 py-0" aria-live="polite">
+    <div className="flex w-full min-w-0 shrink-0 flex-col gap-1.5 min-[1080px]:gap-2 py-0" aria-live="polite">
       <div className="qn-frame flex aspect-square w-full min-h-0 min-w-0 flex-col items-center justify-center gap-2 text-center">
         {qrSvg ? (
           <div

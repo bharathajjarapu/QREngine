@@ -29,7 +29,7 @@ export function Colors({ fields, setField, setFields }) {
                 type="button"
                 title={full}
                 onClick={() => setField('qrFgStyle', value)}
-                className={`qn-opt min-h-0 py-2.5 sm:min-h-[3.1rem] sm:py-2.5 ${on ? 'qn-opt--on' : 'qn-opt--off'}`}
+                className={`qn-opt ${on ? 'qn-opt--on' : 'qn-opt--off'}`}
                 aria-pressed={on}
               >
                 <span className="text-center text-xs font-semibold leading-tight sm:text-sm">{short}</span>
@@ -162,7 +162,7 @@ export function Colors({ fields, setField, setFields }) {
                 type="button"
                 title={full}
                 onClick={() => setBg(value)}
-                className={`qn-opt min-h-0 py-2.5 sm:min-h-[3.1rem] sm:py-2.5 ${on ? 'qn-opt--on' : 'qn-opt--off'}`}
+                className={`qn-opt ${on ? 'qn-opt--on' : 'qn-opt--off'}`}
                 aria-pressed={on}
               >
                 <span className="text-center text-xs font-semibold leading-tight sm:text-sm">{short}</span>
