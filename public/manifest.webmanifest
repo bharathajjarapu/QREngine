@@ -1,0 +1,26 @@
+{
+  "name": "QREngine",
+  "short_name": "QREngine",
+  "description": "Minimal, private, fast QR generator. Runs entirely in your browser.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f0ede4",
+  "theme_color": "#f0ede4",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
